@@ -7,14 +7,16 @@ class File(ABC):
     
     def receber_nome_arquivo(funcao):
         def envelope(**kwargs):
-            NOME_PADRAO = "nome_arquivo"
+            print(kwargs)
             nome_arquivo = input("Digite o nome do arquivo: ")
-            kwargs.fromkeys([NOME_PADRAO], nome_arquivo)
-            while not(kwargs.get(NOME_PADRAO)):
+            
+            while not(nome_arquivo):
                 print("Ops, parece que você não informou o nome do arquivo!")
-                nome_arquivo = input("Campos vazios são infalidos\n Digite o nome do arquivo, nomamente: ")
-    
-            resultado = funcao(**kwargs)
+                arquivo_arquivo = input("Campos vazios são infalidos\n Digite o nome do arquivo, nomamente: ")
+            
+            INSTENCAO = kwargs.get("instencao", "instencao não encontrada")
+            ARQUIVO_FORMATADO = nome_arquivo + INSTENCAO
+            resultado = funcao(arquivo=ARQUIVO_FORMATADO)
             return resultado
         
         return envelope
@@ -26,7 +28,8 @@ class File(ABC):
         ARQUIVO = kwargs.get(CHAVES[0], "erro")
         print(ARQUIVO)
         with open(ROOT_PATH / ARQUIVO, "w") as file:
-            return f"Arquivo criado com sucesso:\r{file.name}"
+            pass
+        return 
             
     
     @abstractmethod
@@ -41,11 +44,8 @@ class JavaScript(File):
     INSTENCAO_JS = ".js"
 
     @classmethod
-    def criar_file(cls, **arquivo):
-        print(arquivo.get("nome_arquivo"))
-        arquivo_js_formatado = arquivo.get("nome_arquivo") + cls.INSTENCAO_JS
-        print(arquivo_js_formatado)
-        return super().criar_file(arquivo_js=arquivo_js_formatado)
+    def criar_file(cls):
+        return super().criar_file(instencao = cls.INSTENCAO_JS)
     
     def mostrar_conteudo(self, **arquivo):
         return super().mostrar_conteudo(arquivo)
@@ -56,15 +56,12 @@ class Html(File):
     INSTENCAO_HTML = ".html"
     
     @classmethod
-    def criar_file(cls, **arquivo):
-        print(arquivo.get("nome_arquivo"))
-        arquivo_html_formatado = arquivo.get("nome_arquivo") + cls.INSTENCAO_HTML
-        print(arquivo_html_formatado)
-        return super().criar_file(arquivo_html=arquivo_html_formatado)
+    def criar_file(cls):
+        return super().criar_file(instencao = cls.INSTENCAO_HTML)
     
     def mostrar_conteudo(self, **arquivo):
         return super().mostrar_conteudo(arquivo)
     
 
 instancia = Html()
-instancia.criar_file(nome_arquivo="primeiro_teste")
+instancia.criar_file()
