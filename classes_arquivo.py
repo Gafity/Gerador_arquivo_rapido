@@ -84,6 +84,6 @@ class Html(File):
     @classmethod
     def criar_arquivos(cls):
         return super().criar_arquivos(instencao = cls.INSTENCAO_HTML)
-    
 
-Html.criar_arquivos()
+for files in ROOT_PATH.glob('*.py'):
+    print(f"-{files}")
