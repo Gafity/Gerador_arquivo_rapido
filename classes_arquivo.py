@@ -38,6 +38,22 @@ class File(ABC):
             for reading in file.readlines():
                 print(reading)
 
+    @abstractmethod
+    def criar_arquivos(**kwargs):
+        loop = True
+        INSTENCAO = kwargs.get("instencao")
+        while loop:
+            vetor_nomes = input('Digite o nome dos arquivos (seperado por ","): ')
+            vetor_nomes = vetor_nomes.lstrip()
+            vetor_nomes = vetor_nomes.split(",")
+            incremento = 0
+            with open(ROOT_PATH.joinpath([nomes+INSTENCAO for nomes in vetor_nomes][incremento]) , "w") as file:
+                print(f"Arquivo criado com sucesso! {vetor_nomes[incremento]}")
+                incremento += incremento
+            
+            opcao = input("Deseja criar mais arquivos? S/n").upper()
+            opcao == "N" if not loop else print("Programa finalizado com sucesso!")
+
 #-------------------------------------------------
 
 class JavaScript(File):
@@ -50,6 +66,9 @@ class JavaScript(File):
     def mostrar_conteudo(self, **arquivo):
         return super().mostrar_conteudo(arquivo)
 
+    @classmethod
+    def criar_arquivos(cls):
+        return super().criar_arquivos(instencao = cls.INSTENCAO_JS)
 #-------------------------------------------------
 
 class Html(File):
@@ -62,6 +81,9 @@ class Html(File):
     def mostrar_conteudo(self, **arquivo):
         return super().mostrar_conteudo(arquivo)
     
+    @classmethod
+    def criar_arquivos(cls):
+        return super().criar_arquivos(instencao = cls.INSTENCAO_HTML)
+    
 
-instancia = Html()
-instancia.criar_file()
+Html.criar_arquivos()
