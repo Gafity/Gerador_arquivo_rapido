@@ -3,6 +3,20 @@ from abc import ABC, abstractmethod, abstractproperty
 
 ROOT_PATH = Path(__file__).parent
 
+class Pasta(Path):
+    @staticmethod
+    def listar_arquivos():
+        for arquivo in ROOT_PATH.iterdir():
+            if arquivo.is_dir():
+                continue
+            elif arquivo.is_file():
+                list_arquivo = list(str(arquivo))
+                caminho = "".join(list_arquivo)
+                diretorios_isolados = caminho.split("\\")
+                total_diretorios = caminho.count("\\")
+                print(diretorios_isolados[total_diretorios])
+
+
 class File(ABC):
     
     def receber_nome_arquivo(funcao):
@@ -85,5 +99,5 @@ class Html(File):
     def criar_arquivos(cls):
         return super().criar_arquivos(instencao = cls.INSTENCAO_HTML)
 
-for files in ROOT_PATH.glob('*.py'):
-    print(f"-{files}")
+
+Pasta.listar_arquivos()
