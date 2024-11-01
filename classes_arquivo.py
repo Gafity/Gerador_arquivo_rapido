@@ -15,6 +15,34 @@ class Pasta(Path):
                 diretorios_isolados = caminho.split("\\")
                 total_diretorios = caminho.count("\\")
                 print(diretorios_isolados[total_diretorios])
+    
+    @staticmethod
+    def listar_diretorios():
+        for arquivo in ROOT_PATH.iterdir():
+            if arquivo.is_dir():
+                list_arquivo = list(str(arquivo))
+                caminho = "".join(list_arquivo)
+                diretorios_isolados = caminho.split("\\")
+                try:
+                    diretorios_isolados.remove(".git")
+                except ValueError:
+                    [print(diretorios) for diretorios in diretorios_isolados]
+                
+                [print(diretorios) for diretorios in diretorios_isolados]
+            elif arquivo.is_file():
+                continue
+
+    @staticmethod
+    def criar_diretorios():
+        try:
+            nome_pasta = input("Digite o nome da pasta: ")
+            caminho_nova_pasta = ROOT_PATH / nome_pasta
+            caminho_nova_pasta.mkdir(parents=True, exist_ok=False)
+        except FileExistsError as erro:
+            print(f"Ops, parece que a pasta já existe! {erro}")
+            Pasta.criar_diretorios()
+            
+            
 
 
 class File(ABC):
@@ -100,4 +128,4 @@ class Html(File):
         return super().criar_arquivos(instencao = cls.INSTENCAO_HTML)
 
 
-Pasta.listar_arquivos()
+Pasta.listar_diretorios()
