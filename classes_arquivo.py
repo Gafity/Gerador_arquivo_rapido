@@ -39,12 +39,42 @@ class Pasta(Path):
             caminho_nova_pasta = ROOT_PATH / nome_pasta
             caminho_nova_pasta.mkdir(parents=True, exist_ok=False)
         except FileExistsError as erro:
-            print(f"Ops, parece que a pasta já existe! {erro}")
-            Pasta.criar_diretorios()
+            tentativa = 1
+            acerto = 0
+            incremento_pasta_numero = 1
+            while tentativa > acerto:
+                try:
+                    caminho_nova_pasta = ROOT_PATH.joinpath(f"{nome_pasta+" "+str(incremento_pasta_numero)}") 
+                    acerto += 1
+                    caminho_nova_pasta.mkdir(parents=True, exist_ok=False)
+                except FileExistsError:
+                    incremento_pasta_numero += 1
+                    print(f"Esse é o valor do incremento {incremento_pasta_numero}")
+                    tentativa += 1
+                    continue
+        
+    @staticmethod
+    def criar_estrutura_web():
+        try:
+            estrutura_diretorios = ["css", "img", "js"]
+            for pasta in estrutura_diretorios:
+                caminho_pasta = ROOT_PATH / pasta
+                caminho_pasta.mkdir(parents=True, exist_ok=False)
+                if pasta != "img":
+                    if pasta == "js":
+                        with open(caminho_pasta / f"script.{pasta}", "w"):
+                            pass
+                    else:
+                        with open(caminho_pasta/ f"styles.{pasta}", "w"):
+                            pass
+
+        except FileExistsError:
+            print("estrutura de diretorios já criado ou contém alguma pasta da estrutura já existe")
+        
+        #adicionar os tratamentos de erro para os arquivos.
+
             
             
-
-
 class File(ABC):
     
     def receber_nome_arquivo(funcao):
@@ -127,5 +157,4 @@ class Html(File):
     def criar_arquivos(cls):
         return super().criar_arquivos(instencao = cls.INSTENCAO_HTML)
 
-
-Pasta.listar_diretorios()
+Pasta.criar_estrutura_web()
