@@ -13,4 +13,16 @@ class Main_window(Tk):
         print("contando")
         self.mainloop()
 
-tela = Main_window()
+class Window_Notebook(ttk.Notebook):
+    def __init__(self, master = None, *, class_ = "", cursor = "", height = 0, name = ..., padding = ..., style = "", takefocus = ..., width = 0):
+        self.criar_janela_opcao()
+        super().__init__(master, class_=class_, cursor=cursor, height=height, name=name, padding=padding, style=style, takefocus=takefocus, width=width)
+
+    def criar_janela_opcao(self):
+        frame_opcao_notebook = ttk.Frame(self)
+        frame_opcao_notebook.pack(fill="both", expand=True)
+        ttk.Label(self, text="Hello world!").grid(column=0, row=0)
+        self.add(frame_opcao_notebook, text="opções")
+
+tela_inicial = Main_window()
+tela_notebook = Window_Notebook(tela_inicial)
